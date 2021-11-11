@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AuthComponent implements OnInit {
   public code:string = "";
+  public access_token:string = "";
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {
   }
@@ -19,11 +20,12 @@ export class AuthComponent implements OnInit {
       this.code = params['code']
     });
     if (this.code != ""){
-      this.RequestAccessToken(this.code);
+      this.access_token = this.RequestAccessToken(this.code).access_token;
     }
   }
 
-  RequestAccessToken(code:string) {
+   RequestAccessToken(code:string):any{
+    let data:any = null;
     let form:FormData = new FormData();
     form.append("client_id", "424887959161689");
     form.append("client_secret", "9a74a81abf60f654a31d66461c0d94da");
@@ -33,7 +35,7 @@ export class AuthComponent implements OnInit {
     
     const body = { title: 'Angular POST Request' };
     this.http.post('https://api.instagram.com/oauth/access_token', form).subscribe(data => {
-      console.log(data);
+      return data;
     });;
-} 
+  } 
 }
