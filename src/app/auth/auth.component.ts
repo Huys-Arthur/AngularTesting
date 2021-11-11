@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
       this.code = params['code']
     });
     if (this.code != ""){
-      this.access_token = this.RequestAccessToken(this.code).access_token;
+      this.access_token = JSON.parse(this.RequestAccessToken(this.code)).access_token;
     }
   }
 
