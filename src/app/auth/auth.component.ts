@@ -11,8 +11,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AuthComponent implements OnInit {
   
   public code:string = "";
-  public access_token:string = "";
-  public user_id:string = "";
+  public access_token:string = "IGQVJVSzlwSkFxMlJrVE0tM1puVVVHUFNmY1R0R0dxOEJ0N3A0d3hENlVvQ0djOVlCYmZA2enM4anozV3JaMUlPcGozeTlNLW5xck9KWnZAqYU1WcFRwUjhJOHpJWlZATNW9Bd0poTmtoNXJkS0VPZAW4zeExSVVByMXJRN2pV";
+  public user_id:string = "17841405756412840";
   public account_type:string = "";
   public id:string = "";
   public username:string = "";
@@ -23,11 +23,11 @@ export class AuthComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code']
     });
-    if (this.code != ""){
-      this.GenerateAccessTokenAndUserId(this.code);
-    }
     if (this.access_token != "" && this.user_id != ""){
       this.GenerateUserData(this.user_id, this.access_token);
+    }
+    else {
+      this.GenerateAccessTokenAndUserId(this.code);
     }
   }
 
@@ -49,11 +49,11 @@ export class AuthComponent implements OnInit {
 
   GenerateUserData(user_id:string, access_token:string){
     let data:any = this.http.get("https://graph.instagram.com/v12.0/" + this.user_id + "?fields=account_type,id,username,&access_token=" + this.access_token);
-      if(data != null){
-        console.log(data);
-        this.account_type = data["account_type"];
-        this.id = data["id"];
-        this.username = data["username"];
-      }
+    console.log(data);
+    if(data != null){
+      this.account_type = data["account_type"];
+      this.id = data["id"];
+      this.username = data["username"];
+    }
   }
 }
