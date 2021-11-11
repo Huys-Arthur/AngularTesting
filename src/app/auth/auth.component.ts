@@ -10,7 +10,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AuthComponent implements OnInit {
   public code:string = "";
-  public access_token:string = "";
+  private access_token:string = "";
+  private user_id:string = "";
+  public account_type:string = "";
+  public id:string = "";
+  public username:string = "";
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {
   }
@@ -20,7 +24,16 @@ export class AuthComponent implements OnInit {
       this.code = params['code']
     });
     if (this.code != ""){
-      this.access_token = JSON.parse(this.RequestAccessToken(this.code)).access_token;
+      let data = this.RequestAccessToken(this.code);
+      this.access_token = data["access_token"];
+      this.user_id = data["user_id"];
+    }
+    if (this.access_token != "" && this.user_id != ""){
+      let data:any = this.http.get("https://graph.instagram.com/v12.0/" + this.user_id + "?fields=account_type,id,username,&access_token=" + this.access_token);
+      console.log(data);
+      this.account_type = data["account_type"];
+      this.id = data["id"];
+      this.username = data["username"];
     }
   }
 
@@ -37,5 +50,5 @@ export class AuthComponent implements OnInit {
     this.http.post('https://api.instagram.com/oauth/access_token', form).subscribe(data => {
       return data;
     });;
-  } 
+  }
 }
