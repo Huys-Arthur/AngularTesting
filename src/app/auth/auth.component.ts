@@ -17,8 +17,7 @@ export class AuthComponent implements OnInit {
   public id:string = "";
   public username:string = "";
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {
-  }
+  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -26,18 +25,24 @@ export class AuthComponent implements OnInit {
     });
     if (this.code != ""){
       let data = this.RequestAccessToken(this.code);
-      if(data){
+      if(data != null){
         this.access_token = data["access_token"];
         this.user_id = data["user_id"];
+      }
+      else{
+        console.log("data with token is null");
       }
     }
     if (this.access_token != "" && this.user_id != ""){
       let data:any = this.http.get("https://graph.instagram.com/v12.0/" + this.user_id + "?fields=account_type,id,username,&access_token=" + this.access_token);
-      if(data){
+      if(data != null){
         console.log(data);
         this.account_type = data["account_type"];
         this.id = data["id"];
         this.username = data["username"];
+      }
+      else {
+        console.log("data with profile_data is null")
       }
     }
   }
@@ -51,7 +56,6 @@ export class AuthComponent implements OnInit {
     form.append("redirect_uri", "https://huys-arthur.github.io/AngularTesting/auth/");
     form.append("code", code);
     
-    const body = { title: 'Angular POST Request' };
     this.http.post('https://api.instagram.com/oauth/access_token', form).subscribe(data => {
       return data;
     });;
