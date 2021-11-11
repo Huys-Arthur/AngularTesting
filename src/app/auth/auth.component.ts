@@ -57,8 +57,11 @@ export class AuthComponent implements OnInit {
     form.append("redirect_uri", "https://huys-arthur.github.io/AngularTesting/auth/");
     form.append("code", code);
     
-    this.http.post('https://api.instagram.com/oauth/access_token', form).subscribe(data => {
-      return data;
-    });;
+    this.http.post('https://api.instagram.com/oauth/access_token', form).subscribe(d => {
+      data = d;
+      console.log(d);
+    });
+
+    return data;
   }
 }
