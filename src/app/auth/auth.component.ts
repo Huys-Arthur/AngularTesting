@@ -9,14 +9,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
+  public code:string = "";
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.RequestAccessToken(params['code']);
+      this.code = params['code']
     });
+    if (this.code != ""){
+      this.RequestAccessToken(this.code);
+    }
   }
 
   RequestAccessToken(code:string) {
@@ -24,7 +28,7 @@ export class AuthComponent implements OnInit {
     form.append("client_id", "424887959161689");
     form.append("client_secret", "9a74a81abf60f654a31d66461c0d94da");
     form.append("grant_type", "authorization_code");
-    form.append("redirect_uri", "https://huys-arthur.github.io/AngularTesting/auth");
+    form.append("redirect_uri", "https://huys-arthur.github.io/AngularTesting/auth/");
     form.append("code", code);
     
     const body = { title: 'Angular POST Request' };
