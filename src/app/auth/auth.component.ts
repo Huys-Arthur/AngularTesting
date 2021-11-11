@@ -25,6 +25,7 @@ export class AuthComponent implements OnInit {
     });
     if (this.code != ""){
       let data = this.RequestAccessToken(this.code);
+      console.log(data);
       if(data != null){
         this.access_token = data["access_token"];
         this.user_id = data["user_id"];
