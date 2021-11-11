@@ -24,32 +24,14 @@ export class AuthComponent implements OnInit {
       this.code = params['code']
     });
     if (this.code != ""){
-      let data = this.RequestAccessToken(this.code);
-      console.log(data);
-      if(data != null){
-        this.access_token = data["access_token"];
-        this.user_id = data["user_id"];
-      }
-      else{
-        console.log("data with token is null");
-      }
+      this.GenerateAccessTokenAndUserId(this.code);
     }
     if (this.access_token != "" && this.user_id != ""){
-      let data:any = this.http.get("https://graph.instagram.com/v12.0/" + this.user_id + "?fields=account_type,id,username,&access_token=" + this.access_token);
-      if(data != null){
-        console.log(data);
-        this.account_type = data["account_type"];
-        this.id = data["id"];
-        this.username = data["username"];
-      }
-      else {
-        console.log("data with profile_data is null")
-      }
+      this.GenerateUserData(this.user_id, this.access_token);
     }
   }
 
-   RequestAccessToken(code:string):any{
-    let data:any = null;
+  GenerateAccessTokenAndUserId(code:string){
     let form:FormData = new FormData();
     form.append("client_id", "424887959161689");
     form.append("client_secret", "9a74a81abf60f654a31d66461c0d94da");
@@ -57,11 +39,21 @@ export class AuthComponent implements OnInit {
     form.append("redirect_uri", "https://huys-arthur.github.io/AngularTesting/auth/");
     form.append("code", code);
     
-    this.http.post('https://api.instagram.com/oauth/access_token', form).subscribe(d => {
-      data = d;
-      console.log(d);
+    this.http.post<any>('https://api.instagram.com/oauth/access_token', form).subscribe(data=> {
+      if(data != null){
+        this.access_token = data["access_token"];
+        this.user_id = data["user_id"];
+      }
     });
+  }
 
-    return data;
+  GenerateUserData(user_id:string, access_token:string){
+    let data:any = this.http.get("https://graph.instagram.com/v12.0/" + this.user_id + "?fields=account_type,id,username,&access_token=" + this.access_token);
+      if(data != null){
+        console.log(data);
+        this.account_type = data["account_type"];
+        this.id = data["id"];
+        this.username = data["username"];
+      }
   }
 }
