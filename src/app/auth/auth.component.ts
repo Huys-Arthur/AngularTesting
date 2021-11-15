@@ -23,12 +23,10 @@ export class AuthComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code']
     });
-    if (this.access_token != "" && this.user_id != ""){
-      this.GenerateUserData(this.user_id, this.access_token);
-    }
-    else {
+    if (this.access_token == "" || this.user_id == ""){
       this.GenerateAccessTokenAndUserId(this.code);
     }
+    this.GenerateUserData(this.user_id, this.access_token);
   }
 
   GenerateAccessTokenAndUserId(code:string){
