@@ -46,10 +46,9 @@ export class AuthComponent implements OnInit {
   }
 
   GenerateUserData(user_id:string, access_token:string){
-    this.http.get<any>("https://graph.instagram.com/v12.0/" + this.user_id + "?fields=account_type,id,username,&access_token=" + this.access_token).subscribe(data => {
+    this.http.get<any>("https://graph.instagram.com/v12.0/" + this.user_id + "?fields=id,username,&access_token=" + this.access_token).subscribe(data => {
       console.log(data);
       if(data != null){
-        this.account_type = data["account_type"];
         this.id = data["id"];
         this.username = data["username"];
       }
