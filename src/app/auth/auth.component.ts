@@ -36,11 +36,13 @@ export class AuthComponent implements OnInit {
     
     this.http.post<any>('https://api.instagram.com/oauth/access_token', form).subscribe(data=> {
       if(data != null){
-        this.access_token = data["access_token"];
-        this.user_id = data["user_id"];
+        let access_token = data["access_token"];
+        let user_id = data["user_id"];
+
+        this.GenerateUserData(user_id, access_token);
       }
     });
-    this.GenerateUserData(this.user_id, this.access_token);
+    
   }
 
   GenerateUserData(user_id:string, access_token:string){
