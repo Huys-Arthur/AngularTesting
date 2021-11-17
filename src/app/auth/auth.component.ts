@@ -15,6 +15,7 @@ export class AuthComponent implements OnInit {
   public account_type:string = "";
   public id:string = "";
   public username:string = "";
+  public profile_picture_url:string = "https://i2.wp.com/jennyalvares.com/wp-content/uploads/2016/09/phpk4bgvjPM.jpg";
 
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {}
 
@@ -46,12 +47,17 @@ export class AuthComponent implements OnInit {
   }
 
   GenerateUserData(user_id:string, access_token:string){
-    this.http.get<any>('https://graph.instagram.com/' + user_id + '?fields=id,username,account_type&access_token=' + access_token).subscribe(data => {
-      console.log(data);
+    this.http.get<any>('https://graph.instagram.com/' + user_id + '?fields=id,username,account_type,media_url&access_token=' + access_token).subscribe(data => {
       if(data != null){
         this.id = data["id"];
         this.username = data["username"];
-        this.account_type = data["account_type"]
+        this.account_type = data["account_type"];
+        this.profile_picture_url = data["media_url"];
+      }
+    });
+    this.http.get<any>('https://graph.instagram.com/' + user_id + '?fields=id,media_type,media_url,username,timestamp&access_token=' + access_token).subscribe(data => {
+      if(data != null){
+        console.log(data);
       }
     });
   }
