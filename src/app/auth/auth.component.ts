@@ -24,7 +24,7 @@ export class AuthComponent implements OnInit {
       this.code = params['code']
     });
     if (this.access_token == "" || this.user_id == ""){
-      this.GenerateAccessTokenAndUserId(this.code);
+      //this.GenerateAccessTokenAndUserId(this.code);
     }
     this.GenerateUserData(this.user_id, this.access_token);
   }
@@ -46,11 +46,12 @@ export class AuthComponent implements OnInit {
   }
 
   GenerateUserData(user_id:string, access_token:string){
-    this.http.get<any>("https://graph.instagram.com/v12.0/" + this.user_id + "?fields=id,username,&access_token=" + this.access_token).subscribe(data => {
+    this.http.get<any>('https://graph.instagram.com/' + user_id + '?fields=id,username,account_type&access_token=' + access_token).subscribe(data => {
       console.log(data);
       if(data != null){
         this.id = data["id"];
         this.username = data["username"];
+        this.account_type = data["account_type"]
       }
     });
   }
