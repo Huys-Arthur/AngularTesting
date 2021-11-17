@@ -24,7 +24,7 @@ export class AuthComponent implements OnInit {
       this.code = params['code']
     });
     if (this.access_token == "" || this.user_id == ""){
-      //this.GenerateAccessTokenAndUserId(this.code);
+      this.GenerateAccessTokenAndUserId(this.code);
     }
     this.GenerateUserData(this.user_id, this.access_token);
   }
