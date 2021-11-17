@@ -54,10 +54,9 @@ export class AuthComponent implements OnInit {
         this.account_type = data["account_type"];
       }
     });
-    this.http.get<any>('https://graph.instagram.com/' + user_id + '?fields=id,media_type,media_url,username,timestamp&access_token=' + access_token).subscribe(data => {
+    this.http.get<any>('https://graph.instagram.com/me/media?fields=id,caption&access_token=' + access_token).subscribe(data => {
       if(data != null){
         console.log(data);
-        this.profile_picture_url = data["media_url"];
       }
     });
   }
