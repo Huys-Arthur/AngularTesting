@@ -15,7 +15,6 @@ export class AuthComponent implements OnInit {
   public account_type:string = "";
   public id:string = "";
   public username:string = "";
-  public profile_picture_url:string = "";
 
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {}
 
@@ -52,11 +51,6 @@ export class AuthComponent implements OnInit {
         this.id = data["id"];
         this.username = data["username"];
         this.account_type = data["account_type"];
-      }
-    });
-    this.http.get<any>('https://graph.instagram.com/me/media?fields=id,caption&access_token=' + access_token).subscribe(data => {
-      if(data != null){
-        console.log(data);
       }
     });
   }
