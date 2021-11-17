@@ -10,7 +10,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AuthComponent implements OnInit {
   
-  public code:string = "";
   public access_token:string = "";
   public user_id:string = "";
   public account_type:string = "";
@@ -20,11 +19,11 @@ export class AuthComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.code = params['code']
-    });
+    
     if (this.access_token == "" || this.user_id == ""){
-      this.GenerateAccessTokenAndUserId(this.code);
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.GenerateAccessTokenAndUserId(params['code']);
+      });
       console.log("test")
     }
     console.log(this.user_id, this.access_token)
