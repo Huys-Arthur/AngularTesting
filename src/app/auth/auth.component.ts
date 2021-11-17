@@ -11,8 +11,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AuthComponent implements OnInit {
   
   public code:string = "";
-  public access_token:string = "";
-  public user_id:string = "";
+  public access_token:string = "IGQVJWbUVYR29KVVRhUUJMcFdBb3Q1djgzSHNQV2l0Rk9TeUh1bVU4dFRxUlBzX2lKbWgxejF3eWw1V3JOQU03RjdUU192OEdmc09BaklsZAWhaNVNQTUtETGltVkt3Nzd5QzZAjVE5ObFRCMk1KZAWdubzZAKVWxEc0tZAUFVN";
+  public user_id:string = "17841405756412840";
   public account_type:string = "";
   public id:string = "";
   public username:string = "";
