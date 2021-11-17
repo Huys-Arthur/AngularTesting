@@ -19,15 +19,11 @@ export class AuthComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
-    
     if (this.access_token == "" || this.user_id == ""){
       this.activatedRoute.queryParams.subscribe(params => {
         this.GenerateAccessTokenAndUserId(params['code']);
       });
-      console.log("test")
     }
-    console.log(this.user_id, this.access_token)
-    this.GenerateUserData(this.user_id, this.access_token);
   }
 
   GenerateAccessTokenAndUserId(code:string){
@@ -44,6 +40,7 @@ export class AuthComponent implements OnInit {
         this.user_id = data["user_id"];
       }
     });
+    this.GenerateUserData(this.user_id, this.access_token);
   }
 
   GenerateUserData(user_id:string, access_token:string){
